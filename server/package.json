@@ -1,0 +1,24 @@
+{
+  "name": "David-Diaz-Backend",
+  "version": "0.0.1",
+  "description": "backend para web personal",
+  "main": "index.js",
+  "author": "David Diaz",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt-nodejs": "^0.0.3",
+    "body-parser": "^1.19.0",
+    "connect-multiparty": "^2.2.0",
+    "cors": "^2.8.5",
+    "es6-promisify": "^6.1.1",
+    "express": "^4.17.1",
+    "global": "^4.4.0",
+    "jwt-simple": "^0.5.6",
+    "moment": "^2.27.0",
+    "mongoose": "^5.9.22",
+    "nodemon": "^2.0.4"
+  },
+  "scripts": {
+    "start": "nodemon index.js"
+  }
+}
