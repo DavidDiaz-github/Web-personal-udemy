@@ -1,0 +1,1 @@
+const eliminar = "delete"
