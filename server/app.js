@@ -9,10 +9,11 @@ const { API_VERSION } = require("./config");
 const authRoutes = require('./routers/auth');
 const userRoutes = require("./routers/user");
 const menuRoutes = require('./routers/menu');
+const newsLetterRoutes = require('./routers/NewsLetter');
 
-
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(cors());
+app.use(bodyParser.urlencoded({limit:'50mb', extended: false}));
+app.use(bodyParser.json({limit:'50mb'}));
 
 //configure Header HTTP
 // app.use((req, res, next) => {
@@ -25,12 +26,13 @@ app.use(bodyParser.json());
 //     res.header("Allow", "GET, POST, OPTIONS, PUT, DELETE");
 //     next();
 // });
-app.use(cors())
+
 
 
 //Router Basic
 app.use(`/api/${API_VERSION}`, authRoutes);
 app.use(`/api/${API_VERSION}`, userRoutes);
 app.use(`/api/${API_VERSION}`, menuRoutes);
+app.use(`/api/${API_VERSION}`, newsLetterRoutes);
 
 module.exports = app;
