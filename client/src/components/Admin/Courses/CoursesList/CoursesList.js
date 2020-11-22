@@ -7,7 +7,7 @@ import {
 import DragSortableList from 'react-drag-sortable';
 import Modal from '../../../Modal';
 import { getAccessTokenApi } from '../../../../api/auth';
-import { deleteCourseApi, getCourseDataUdemyApi } from '../../../../api/courses';
+import { deleteCourseApi, getCourseDataUdemyApi, updateCourseApi } from '../../../../api/courses';
 import AddEditCourseForm from '../AddEditCourseForm';
 
 import './CoursesList.scss';
@@ -31,6 +31,7 @@ export default function CoursesList(props) {
                     <Course 
                         course={course}
                         deleteCourse={deleteCourse}
+                        editCourseModal={editCourseModal}
                     />
                 )
             })
@@ -39,7 +40,13 @@ export default function CoursesList(props) {
     }, [courses])
 
     const onSort = (sortedList, dropEvent) => {
-        console.log(sortedList);
+        const accessToken = getAccessTokenApi()
+
+        sortedList.forEach(item => {
+            const { _id } = item.content.props.course;
+            const order = item.rank;
+            updateCourseApi(accessToken, _id, {order})
+        })
     }
 
     const deleteCourse = course => {
@@ -77,6 +84,18 @@ export default function CoursesList(props) {
         )
     }
 
+    const editCourseModal = course => {
+        setIsVisibleModal(true)
+        setModalTitle('Actualizando curso.')
+        setModalContent(
+            <AddEditCourseForm 
+                setIsVisibleModal={setIsVisibleModal}
+                setReloadCourse={setReloadCourse}
+                course={course}
+            />
+        )
+    }
+
     return (
         <div className='courses-list'>
             <div className='courses-list__header'>
@@ -103,7 +122,7 @@ export default function CoursesList(props) {
 
 
 function Course(props) {
-    const { course, deleteCourse } = props;
+    const { course, deleteCourse, editCourseModal } = props;
     const [courseData, setCourseData] = useState(null);
 
     useEffect(() => {
@@ -122,7 +141,7 @@ function Course(props) {
     return (
         <List.Item
             actions={[
-                <Button type='primary' onClick={() => console.log('Editar curso.')}><EditOutlined /></Button>,
+                <Button type='primary' onClick={() => editCourseModal(course)}><EditOutlined /></Button>,
                 <Button type='danger' onClick={() => deleteCourse(course)}><DeleteOutlined /></Button>               
             ]}
         >

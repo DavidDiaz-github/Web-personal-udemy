@@ -55,3 +55,21 @@ export function addCourseApi(token, course) {
         .then(result => result)
         .catch(err => err)
 }
+
+export function updateCourseApi(token, id, data) {
+    const url = `${basePath}/${apiVersion}/update-course/${id}`;
+
+    const params = {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: token
+        },
+        body: JSON.stringify(data)
+    }
+
+    return fetch(url, params)
+        .then(response => response.json())
+        .then(result => result)
+        .catch(err => err)
+}

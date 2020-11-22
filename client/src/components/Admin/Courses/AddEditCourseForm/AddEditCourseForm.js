@@ -7,13 +7,17 @@ import {
     LinkOutlined
 } from '@ant-design/icons';
 import { getAccessTokenApi } from '../../../../api/auth';
-import { addCourseApi } from '../../../../api/courses';
+import { addCourseApi, updateCourseApi } from '../../../../api/courses';
 
 import './AddEditCourseForm.scss';
 
 export default function AddEditCourseForm(props) {
     const { setIsVisibleModal, setReloadCourse, course } = props;
     const [courseData, setCourseData] = useState({});
+
+    useEffect(() => {
+        course ? setCourseData(course): setCourseData({})
+    }, [course])
 
     const addCourse = e => {
         e.preventDefault()
@@ -40,7 +44,20 @@ export default function AddEditCourseForm(props) {
 
     const updateCourse = e => {
         e.preventDefault()
-        console.log('actualizando curso!!!');
+
+        const accessToken = getAccessTokenApi()
+
+        updateCourseApi(accessToken, course._id, courseData)
+            .then(response => {
+                const typeNotification = response.code === 200 ? "success" : "warning";
+                notification[typeNotification]({ message: response.message })
+                setIsVisibleModal(false)
+                setReloadCourse(true)
+                setCourseData({})
+            })
+            .catch(() => {
+                notification["error"]({message: 'Error del servidor, intentelo más tarde'})
+            })
     }
 
     return (
