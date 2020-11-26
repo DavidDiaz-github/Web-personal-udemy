@@ -6,8 +6,9 @@ const { API_VERSION, IP_SERVER, PORT_DB } = require("./config");
 
 mongoose.set("useFindAndModify", false);
 
-
-mongoose.connect(`mongodb://${IP_SERVER}:${PORT_DB}/daviddiaz`, { useNewUrlParser:true, useUnifiedTopology: true}, (err, res) => {
+const mongoAtlas = `mongodb+srv://david:12345daviD@web-personal-curso.uxjkm.mongodb.net/<dbname>?retryWrites=true&w=majority`
+const mongoLocal = `mongodb://${IP_SERVER}:${PORT_DB}/daviddiaz`
+mongoose.connect(`${mongoAtlas}`, { useNewUrlParser:true, useUnifiedTopology: true}, (err, res) => {
     if (err){
         throw err;
     }else {
