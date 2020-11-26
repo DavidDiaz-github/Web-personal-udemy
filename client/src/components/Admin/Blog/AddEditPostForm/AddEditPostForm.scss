@@ -1,0 +1,22 @@
+@import '../../../../scss/index.scss';
+
+.add-edit-post-form{
+    text-align: center;
+    justify-content: center;
+
+    .ant-form-item{
+        margin: 5px 0px;    
+    }
+
+    .anticon{
+            color: rgba(0,0,0,0.45);
+    }
+
+    .tox-tinymce{
+        margin: 20px 0px;
+    }
+
+    .btn-submit{
+        width: 100%;
+    }
+}
